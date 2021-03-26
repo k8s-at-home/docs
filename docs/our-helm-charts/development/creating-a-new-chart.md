@@ -22,8 +22,8 @@ sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b .bin
 # Create chart
 PATH=$PATH:$PWD/.bin
 task deps:install
-task chart:create CHART=chart_name
-# Don't forgot edit some chart informations in charts/char_name/Chart.yaml and charts/char_name/values.yaml
+task chart:create CHART=chart-name
+# Don't forgot edit some chart informations in charts/chart-name/Chart.yaml and charts/chart-name/values.yaml
 ```
 
 Second, be sure to checkout the many charts that already use this like
@@ -39,7 +39,7 @@ Include this chart as a dependency in your `Chart.yaml` e.g.
 dependencies:
 - name: common
   version: 3.0.1 # make sure to use the latest common library version available
-  repository: https://k8s-at-home.com/charts/
+  repository: https://library-charts.k8s-at-home.com
 ...
 ```
 
@@ -174,8 +174,8 @@ Be sure to lint your chart to check for any errors.
 
 ```sh
 # Linting
-task chart:lint CHART=chart_name
-task chart:ct-lint CHART=chart_name
+task chart:lint CHART=chart-name
+task chart:ct-lint CHART=chart-name
 ```
 
 [zigbee2mqtt]: https://github.com/k8s-at-home/charts/tree/master/charts/stable/zigbee2mqtt
