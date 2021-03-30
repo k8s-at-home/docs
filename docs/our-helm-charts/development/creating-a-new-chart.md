@@ -22,8 +22,8 @@ sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b .bin
 # Create chart
 PATH=$PATH:$PWD/.bin
 task deps:install
-task chart:create CHART=chart-name
-# Don't forgot edit some chart informations in charts/chart-name/Chart.yaml and charts/chart-name/values.yaml
+task chart:create CHART_TYPE=incubator CHART=chart-name
+# Don't forgot edit some chart informations in charts/incubator/chart-name/Chart.yaml and charts/chart-name/values.yaml
 ```
 
 Second, be sure to checkout the many charts that already use this like
@@ -31,7 +31,7 @@ Second, be sure to checkout the many charts that already use this like
 [node-red](https://github.com/k8s-at-home/charts/tree/master/charts/stable/node-red)
 or the many others in this repository.
 
-Include this chart as a dependency in your `Chart.yaml` e.g.
+You will see which charts include this common chart as dependency:
 
 ```yaml
 # Chart.yaml
@@ -45,7 +45,7 @@ dependencies:
 
 ## Values
 
-Write a `values.yaml` with some basic defaults you want to present to the user
+Edit `values.yaml` with some basic defaults you want to present to the user. Please ensure you anotate them with [helm-docs](https://github.com/norwoodj/helm-docs)
 e.g.
 
 ```yaml
@@ -57,11 +57,15 @@ e.g.
 #
 
 image:
+  # -- Image repository
   repository: nodered/node-red
+  # -- Image pull policy
   pullPolicy: IfNotPresent
+  # -- Image tag
   tag: 1.2.5
 
 strategy:
+  # -- Deployment recreation strategy
   type: Recreate
 
 # See more environment variables in the node-red documentation
@@ -75,15 +79,20 @@ env: {}
 
 service:
   port:
-    port: 1880
+  # -- Pod listen port
+  port: 1880
 
 ingress:
+  # -- Enable ingress
   enabled: false
 
 persistence:
   data:
+    # -- Enable data persistency
     enabled: false
+    # -- Use empty directory for persistency (only for tests)
     emptyDir: false
+    # -- Data mount path
     mountPath: /data
 ```
 
@@ -174,8 +183,8 @@ Be sure to lint your chart to check for any errors.
 
 ```sh
 # Linting
-task chart:lint CHART=chart-name
-task chart:ct-lint CHART=chart-name
+task chart:lint CHART_TYPE=incubator CHART=chart-name
+task chart:ct-lint CHART_TYPE=incubator CHART=chart-name
 ```
 
 [zigbee2mqtt]: https://github.com/k8s-at-home/charts/tree/master/charts/stable/zigbee2mqtt
