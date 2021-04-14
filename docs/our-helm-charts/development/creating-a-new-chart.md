@@ -91,7 +91,8 @@ persistence:
     # -- Enable data persistency
     enabled: false
     # -- Use empty directory for persistency (only for tests)
-    emptyDir: false
+    emptyDir: 
+      enabled: false
     # -- Data mount path
     mountPath: /data
 ```
