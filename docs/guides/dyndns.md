@@ -1,17 +1,20 @@
 # Introduction
 
-This is a guide on how to use native k8s `CronJob`s to sync your WAN IP to a dns provider.
+This is a guide on how to use native k8s `CronJob`s to sync your WAN IP to a
+dns provider.
 
 ## Creating a `ConfigMap`
 
-Let's get started by creating a `configmap` with the script to update to your DNS provider.
+Let's get started by creating a `configmap` with the script to update to
+your DNS provider.
 
 !!! Note
     In this example we will be using DigitalOcean
     This can work with any provider as long as your script works
 
-A quick search yielded [this gist](https://gist.github.com/kenmickles/6746968). 
-Let's go ahead and update it a bit to work in our `CronJob` while putting it in a `configmap`.
+A quick search yielded [this gist](https://gist.github.com/kenmickles/6746968).
+Let's go ahead and update it a bit to work in our `CronJob` while putting it
+in a `configmap`.
 
 ```yaml
 # configmap.yaml
@@ -41,7 +44,8 @@ data:
 
 ## Creating a `Secret`
 
-Next step is to create a secret, this will require a `$TOKEN` passed thru to the `CronJob`.
+Next step is to create a secret, this will require a `$TOKEN` passed thru to
+the `CronJob`.
 
 ```yaml
 # secret.yaml

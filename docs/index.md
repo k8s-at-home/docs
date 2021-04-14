@@ -17,9 +17,11 @@ which aims to support running [Kubernetes](https://kubernetes.io/) at home.
 
 ### Repository topics
 
-Have a look at people running Kubernetes at home [on
-GitHub](https://github.com/topics/k8s-at-home?o=desc&s=updated) and [on
-GitLab](https://gitlab.com/search?search=k8s-at-home).
+Have a look at people running Kubernetes at home
+[on GitHub](https://github.com/topics/k8s-at-home?o=desc&s=updated) and
+<!-- Disable link check because it requires login -->
+<!-- markdown-link-check-disable-next-line -->
+[on GitLab](https://gitlab.com/search?search=k8s-at-home).
 
 ### Awesome Home Kubernetes
 

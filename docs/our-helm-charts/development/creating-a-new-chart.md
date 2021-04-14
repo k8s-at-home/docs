@@ -45,7 +45,8 @@ dependencies:
 
 ## Values
 
-Edit `values.yaml` with some basic defaults you want to present to the user. Please ensure you anotate them with [helm-docs](https://github.com/norwoodj/helm-docs)
+Edit `values.yaml` with some basic defaults you want to present to the user.
+Please ensure you anotate them with [helm-docs](https://github.com/norwoodj/helm-docs)
 e.g.
 
 ```yaml
