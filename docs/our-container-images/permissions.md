@@ -24,13 +24,14 @@ In our [Helm charts](https://github.com/k8s-at-home/charts/) this can be accompl
 by setting the following option in you Helm values.
 
 !!! note
-    According to the Kubernetes docs `fsGroup` will `chown` 
+    According to the Kubernetes docs `fsGroup` will `chown`
     the volume with the `runAsUser` and `runAsGroup` IDs.
-    
+
     As such this option should only have to be set once
     or it may cause your pod to take long to start each
     time it is started.
 
+<!-- markdownlint-disable-next-line MD046 -->
 ```yaml
 podSecurityContext:
   runAsUser: 568
@@ -43,6 +44,7 @@ podSecurityContext:
 Implement a `initContainer` that runs as root to automatically chown the volume's
 data.
 
+<!-- markdownlint-disable-next-line MD046 -->
 ```yaml
 initContainers:
 - name: update-volume-permission
@@ -58,10 +60,11 @@ initContainers:
 ### Direct volume method
 
 !!! warning
-    This step can be a bit complicated if you are not very familiar with your storage interface.
+    This step can be a bit complicated if you are not very familiar with your
+    storage interface.
 
 If you can mount the volume's config without the pod running. You can run
-`chown -R 568:568 <path-to-the mounted-volume-on-the host>`. 
+`chown -R 568:568 <path-to-the mounted-volume-on-the host>`.
 
-As this method varies greatly depending on your CSI driver, we won't be mentioning
-how to accomplish this.
+As this method varies greatly depending on your CSI driver, we won't be
+mentioning how to accomplish this.

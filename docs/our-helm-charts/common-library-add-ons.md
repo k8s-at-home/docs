@@ -90,14 +90,16 @@ env:
 persistence:
   config:
     enabled: true
-    emptyDir: true
+    emptyDir: 
+      enabled: true
     mountPath: /config
 
   # This should be enabled so that both the qBittorrent and Wireguard container have access to a shared volume mounted to /shared.
   # It will be used to communicate between the two containers.
   shared:
     enabled: true
-    emptyDir: true
+    emptyDir: 
+      enabled: true
     mountPath: /shared
 
 addons:
@@ -190,14 +192,16 @@ env:
 persistence:
   config:
     enabled: true
-    emptyDir: true
+    emptyDir: 
+      enabled: true
     mountPath: /config
 
   # This should be enabled so that both the qBittorrent and OpenVPN container have access to a shared volume mounted to /shared.
   # It will be used to communicate between the two containers.
   shared:
     enabled: true
-    emptyDir: true
+    emptyDir: 
+      enabled: true
     mountPath: /shared
 
 addons:

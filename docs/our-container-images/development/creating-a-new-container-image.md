@@ -83,10 +83,19 @@ source "/shim/umask.sh"
 source "/shim/vpn.sh"
 ```
 
-If the app has custom [shim scripts](#shim-scripts), be sure to source those as well.
+If the app has custom [shim scripts](#shim-scripts), be sure to source those
+as well.
 
 ```shell
 source "/shim/<app name>-preferences.sh"
+```
+
+Ensure to append the `${EXTRA_ARGS}` environmental variable to the end of the
+`exec` command so that extra args can be passed to the container by the helm
+chart.
+
+```shell
+exec /app/foo ${EXTRA_ARGS}
 ```
 
 ### goss.yaml

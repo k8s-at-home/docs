@@ -12,8 +12,9 @@ The goal of this project and the container images are to support
 
 We try to keep a [KISS principle](https://en.wikipedia.org/wiki/KISS_principle)
 when building these images, which means no
-[s6-overlay](https://github.com/just-containers/s6-overlay) and all images are
-built on top of [ubuntu:focal](https://hub.docker.com/_/ubuntu).
+[s6-overlay](https://github.com/just-containers/s6-overlay),
+are all built on top of [ubuntu:focal](https://hub.docker.com/_/ubuntu), and are 
+only amd64 and arm64 architectures.
 
 ## Deprecations
 
