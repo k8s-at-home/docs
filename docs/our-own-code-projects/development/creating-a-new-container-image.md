@@ -36,7 +36,7 @@ Makefile.
 ### Building and testing
 
 1. `make` will build and test the code
-2. `make ` will build the container
+2. `make docker-build` will build the container
 
 ### Testing the CI pipeline in GitHub
 
@@ -48,5 +48,6 @@ It will be private so you will need to ask a community mainteiner to make it pub
 ## References
 
 Check the following examples of code projects:
+
 - [dnsmadeeasy-webhook](https://github.com/k8s-at-home/dnsmadeeasy-webhook)
 - [dynamic-ip-controller](https://github.com/k8s-at-home/dynamic-ip-controller)
