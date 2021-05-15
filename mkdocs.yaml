@@ -127,10 +127,10 @@ nav:
           - Base images: our-container-images/development/base-images.md
           - Build: our-container-images/development/build.md
   - Our Code Projects:
-      - Introduction: docs/our-own-code-projects/introduction.md
+      - Introduction: our-own-code-projects/introduction.md
       - Development:
           - Creating a new project: >-
-              docs/our-own-code-projects/development/creating-a-new-container-image.md
+              our-own-code-projects/development/creating-a-new-container-image.md
   - Guides:
       - DynDNS with a CronJob: guides/dyndns.md
   - Support:
