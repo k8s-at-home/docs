@@ -133,6 +133,7 @@ nav:
               our-own-code-projects/development/creating-a-new-container-image.md
   - Guides:
       - DynDNS with a CronJob: guides/dyndns.md
+      - Routing traffic through a VPN pod: guides/pod-gateway.md
   - Support:
       - Community: support/community.md
       - FAQ: support/faq.md
