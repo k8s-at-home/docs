@@ -39,6 +39,35 @@ podSecurityContext:
   fsGroup: 568
 ```
 
+#### Optional configuration
+
+To prevent issues with long start-up times using this method,
+you can specify `fsGroupChangePolicy` with one of the following:
+
+* `Always`
+  * Instructs Kubernetes to `chown` the volume each time the pod starts
+* `OnRootMismatch`
+  * Instructs Kubernetes to `chown` the volume only if the
+  permissions on the root of the volume do not already match
+  * This is typically much faster than `Always`
+
+!!! note
+    This is an alpha feature in Kubernetes 1.18-1.19, and must be
+    [manually enabled](https://kubernetes.io/docs/reference/command-line-tools-reference/feature-gates/#overview).
+    This became a beta feature in Kubernetes 1.20, and as such is enabled
+    by default in Kubernetes 1.20+
+
+Example:
+
+<!-- markdownlint-disable-next-line MD046 -->
+```yaml
+podSecurityContext:
+  runAsUser: 568
+  runAsGroup: 568
+  fsGroup: 568
+  fsGroupChangePolicy: "OnRootMismatch"
+```
+
 ### initContainer method
 
 Implement a `initContainer` that runs as root to automatically chown the volume's
