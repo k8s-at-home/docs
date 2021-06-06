@@ -109,7 +109,7 @@ spec:
           done
 ```
 
-If you exec into it you should see the traffic being routed throug the gateway:
+If you exec into it you should see the traffic being routed through the gateway:
 
 ```shell
 root@k3s1:~# kubectl exec -ti -n vpn deploy/terminal -- sh
@@ -148,17 +148,17 @@ nameserver 172.16.0.1
 round-trip min/avg/max = 36.366/36.366/36.366 ms
 ```
 
-The important part is that default gateway and the DNS are set to 172.16.0.1 which
-is the default IP of the gateway POD in the vlxlan network. If this is the case
-then you are ready for the (optional) VPN setup
+The important part is that the default gateway and the DNS are set to `172.16.0.1`
+which is the default IP of the gateway POD in the vlxlan network. If this is the
+case then you are ready for the (optional) VPN setup.
 
 If the ping does not work and you are using Calico please check the
-section bellow.
+`Calico` section bellow.
 
 ### Network Policy
 
-For additional precaution you should deploy a network policy into each routed
-namespace to prevent traffic to leave the K8S cluster without passing through the
+For additional precaution, you should deploy a network policy into each routed
+namespace to prevent traffic leaving the K8S cluster without passing through the
 pod gateway. This way, even in case of setup errors, you will not leak any traffic.
 
 ```yaml
@@ -253,11 +253,13 @@ spec:
 
 ### Exposing routed pod ports from the gateway
 
-This is specially useful if you need to expose PODs to the Internet thorugh the
-VPN server. For example, you might expose the torrent port or a web server.
+You can expose individual ports of routed PODs thought he pod gateway.
+
+This is specially useful if you need to expose PODs to the Internet through the
+VPN server. For example, you can expose the torrent port or a web server.
 
 You need to ensure the exposed routed pod has a static name. If you use the
-k8s-at-home charts, this is done by setting the `hostname` variable:
+k8s-at-home charts, this is done by setting the `hostname` value:
 
 ```yaml
 # HelmRelease.yaml
@@ -299,7 +301,7 @@ spec:
 
 ### Calico
 
-Calico only configures a single dwfault gateway and not dedicated rules for traffic
+Calico only configures a single default gateway and not dedicated rules for traffic
 within the K8S cluster. So you will need to add that explictly by extending the
 pod-gateway helm chart deployment:
 
@@ -326,7 +328,7 @@ spec:
 
 ### Connectivity
 
-From gateway and routed pods check the following pings:
+From the gateway and routed pods check you can ping the following:
 
 1. K8S DNS IP (check an stardard port to find out)
    - if this fails, then likelly you forgot setting `NOT_ROUTED_TO_GATEWAY_CIDRS`.
@@ -354,7 +356,7 @@ From gateway and routed pods check the following pings:
 
 ### Collecting more debug
 
-Collect the following from the routed and gateway pods:
+Collect the following information from the routed and gateway pods:
 
 - `ip route`
 - `ip addr`
