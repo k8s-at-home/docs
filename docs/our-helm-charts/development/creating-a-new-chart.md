@@ -8,6 +8,7 @@ a few tools you will need.
 - [helm](https://helm.sh/docs/intro/install/)
 - [helm-docs](https://github.com/norwoodj/helm-docs)
 - [task](https://github.com/go-task/task) (optional)
+- [pre-commmit](https://pre-commit.com) (optional - required with tasks)
 
 ## Creating a new chart
 
