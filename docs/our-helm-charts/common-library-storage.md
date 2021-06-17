@@ -141,7 +141,9 @@ for more information.
 | `readOnly`      | No        | Specify if the volume should be mounted read-only.                                    |
 | `nameOverride`  | No        | Override the name suffix that is used for this volume.                                |
 
-#### configMap
+#### Examples
+
+##### configMap
 
 Minimal config:
 
@@ -156,7 +158,7 @@ persistence:
 
 This will mount the contents of the pre-existing `mySettings` configMap to `/config`.
 
-#### Secret
+##### Secret
 
 Minimal config:
 
@@ -171,7 +173,7 @@ persistence:
 
 This will mount the contents of the pre-existing `mySecret` Secret to `/config`.
 
-#### NFS Volume
+##### NFS Volume
 
 To mount an NFS share to your Pod you can either pre-create a persistentVolumeClaim
 referring to it, or you can specify an inline NFS volume:
@@ -196,4 +198,37 @@ This will mount the NFS share `/tank/nas/library` on server `10.10.0.8` to `/con
 
 ## Permissions
 
+Our charts do not modify file or folder permissions on volumes out of the box.
+
+This means that you will have to make sure that your storage can be written to
+by the application.
+
+See [Permissions](our-container-images/permissions/) for more details about
+your options.
+
 ## Multiple subPaths for 1 volume
+
+It is possible to mount multiple subPaths from the same volume to the main
+container. This can be achieved by specifying `subPath` with a list
+instead of a string.
+
+!!! note
+    It is not possible to define `mountPath` at the top level when using this
+    feature
+
+Example:
+
+```yaml
+persistence:
+  config:
+    type: custom
+    volumeSpec:
+      configMap:
+        name: myData
+    subPath:
+      - path: myFirstScript.sh
+        mountPath: /data/myFirstScript.sh
+      - path: myCertificate.pem
+        mountPath: /certs/myCertificate.pem
+        readOnly: true
+```
