@@ -106,7 +106,7 @@ See the [Kubernetes docs](https://kubernetes.io/docs/concepts/storage/volumes/#h
 for more information.
 
 | Field           | Mandatory | Docs / Description                                                                                                |
-| --------------- | --------- | ------------------------------------------------------------------------------------------------------------------|
+| --------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
 | `type`          | Yes       |                                                                                                                   |
 | `hostPath`      | Yes       | Which path on the host should be mounted.                                                                         |
 | `hostPathType`  | No        | Specifying a hostPathType adds a check before trying to mount the path. See Kubernetes documentation for options. |
@@ -127,11 +127,72 @@ This will mount the `/dev` folder from the underlying host to `/dev` in the cont
 
 ### Custom
 
+When you wish to specify a custom volume, you can use the `custom` type.
+This can be used for example to mount configMap or Secret objects.
+
+See the [Kubernetes docs](https://kubernetes.io/docs/concepts/storage/volumes/)
+for more information.
+
+| Field           | Mandatory | Docs / Description                                                                    |
+| --------------- | --------- | ------------------------------------------------------------------------------------- |
+| `type`          | Yes       |                                                                                       |
+| `volumeSpec`    | Yes       | Define the raw Volume spec here.                                                      |
+| `mountPath`     | No        | Where to mount the volume in the main container. Defaults to the value of `hostPath`. |
+| `readOnly`      | No        | Specify if the volume should be mounted read-only.                                    |
+| `nameOverride`  | No        | Override the name suffix that is used for this volume.                                |
+
 #### configMap
+
+Minimal config:
+
+```yaml
+persistence:
+  config:
+    type: custom
+    volumeSpec:
+      configMap:
+        name: mySettings
+```
+
+This will mount the contents of the pre-existing `mySettings` configMap to `/config`.
 
 #### Secret
 
+Minimal config:
+
+```yaml
+persistence:
+  config:
+    type: custom
+    volumeSpec:
+      secret:
+        secretName: mySecret
+```
+
+This will mount the contents of the pre-existing `mySecret` Secret to `/config`.
+
 #### NFS Volume
+
+To mount an NFS share to your Pod you can either pre-create a persistentVolumeClaim
+referring to it, or you can specify an inline NFS volume:
+
+!!! note
+    Mounting an NFS share this way does not allow for specifying mount options.
+    If you require these, you must create a PVC to mount the share.
+
+Minimal config:
+
+```yaml
+persistence:
+  config:
+    type: custom
+    volumeSpec:
+      nfs:
+        server: 10.10.0.8
+        path: /tank/nas/library
+```
+
+This will mount the NFS share `/tank/nas/library` on server `10.10.0.8` to `/config`.
 
 ## Permissions
 
