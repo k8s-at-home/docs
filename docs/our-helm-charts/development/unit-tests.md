@@ -102,5 +102,5 @@ This will create a container with the charts repo root folder mounted to
 A successful test will output something like the following...
 
 ```text
-ok  	github.com/k8s-at-home/library-charts/charts/stable/common/tests	54.087s
+ok    github.com/k8s-at-home/library-charts/charts/stable/common/tests  54.087s
 ```
