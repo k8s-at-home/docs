@@ -39,7 +39,7 @@ You will see which charts include this common chart as dependency:
 ...
 dependencies:
 - name: common
-  version: 3.0.1 # make sure to use the latest common library version available
+  version: 3.2.0 # make sure to use the latest common library version available
   repository: https://library-charts.k8s-at-home.com
 ...
 ```
@@ -59,43 +59,37 @@ e.g.
 #
 
 image:
-  # -- Image repository
+  # -- image repository
   repository: nodered/node-red
-  # -- Image pull policy
-  pullPolicy: IfNotPresent
-  # -- Image tag
+  # -- image tag
   tag: 1.2.5
+  # -- image pull policy
+  pullPolicy: IfNotPresent
 
-strategy:
-  # -- Deployment recreation strategy
-  type: Recreate
+# -- environment variables.
+# @default -- See below
+env:
+  # -- Set the container timezone
+  TZ: UTC
 
-# See more environment variables in the node-red documentation
-# https://nodered.org/docs/getting-started/docker
-env: {}
-  # TZ:
-  # NODE_OPTIONS:
-  # NODE_RED_ENABLE_PROJECTS:
-  # NODE_RED_ENABLE_SAFE_MODE:
-  # FLOWS:
-
+# -- Configures service settings for the chart.
+# @default -- See values.yaml
 service:
-  port:
-  # -- Pod listen port
-  port: 1880
+  main:
+    ports:
+      http:
+        port: 1880
 
 ingress:
-  # -- Enable ingress
-  enabled: false
+  # -- Enable and configure ingress settings for the chart under this key.
+  # @default -- See values.yaml
+  main:
+    enabled: false
 
 persistence:
   data:
-    # -- Enable data persistency
     enabled: false
-    # -- Use empty directory for persistency (only for tests)
-    emptyDir: 
-      enabled: false
-    # -- Data mount path
+    type: emptyDir
     mountPath: /data
 ```
 
@@ -104,7 +98,8 @@ If not using a service, set the `service.enabled` to `false`.
 ```yaml
 ...
 service:
-  enabled: false
+  main:
+    enabled: false
 ...
 ```
 
@@ -141,18 +136,17 @@ case it is also possible to write more advanced template files.
 {{/* First Make sure all variables are set and merged properly */}}
 {{- include "common.values.setup" . }}
 
-{{/* Append a configMap to the additionalVolumes */}}
-{{- define "myapp.configmap.volume" -}}
-name: myapp-settings
-configMap:
-  name: {{ template "common.names.fullname" . }}-settings
+{{/* Append the configMap volume to the volumes */}}
+{{- define "myapp.settingsVolume" -}}
+enabled: "true"
+mountPath: "/app/configuration.yaml"
+subPath: "configuration.yaml"
+type: "custom"
+volumeSpec:
+  configMap:
+    name: {{ include "common.names.fullname" . }}-settings
 {{- end -}}
-
-{{- $volume := include "myapp.configmap.volume" . | fromYaml -}}
-{{- if $volume -}}
-    {{- $additionalVolumes := append .Values.additionalVolumes $volume }}
-    {{- $_ := set .Values "additionalVolumes" (deepCopy $additionalVolumes) -}}
-{{- end -}}
+{{- $_ := set .Values.persistence "myapp-settings" (include "myapp.settingsVolume" . | fromYaml) -}}
 
 {{/* Render the templates */}}
 {{ include "common.all" . }}

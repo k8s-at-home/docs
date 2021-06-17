@@ -11,14 +11,13 @@ a number of approaches.
 First set up the environment:
 
 ```sh
-export RUBYJQ_USE_SYSTEM_LIBRARIES=1
-bundle install
+go mod download
 ```
 
 Run the tests:
 
 ```sh
-bundle exec m -r test/charts
+go test ./charts/.../tests
 ```
 
 ## Using Visual Studio Code
@@ -55,14 +54,8 @@ and select the desired configuration:
 
 ![Visual Studio Code run configurations](../../assets/screenshots/vscode_run_unittests.png)
 
-- _UnitTest - active spec file only_: This configuration will try to run
-the currently opened test file.
-
-  **Note:** Make sure that you have opened a valid test file (`.rb` files
-  in the `test/charts` folder), or this will not work.
-
-- _UnitTest - all spec files_: This configuration will run the all test
-files in the `test/charts` folder.
+- _stable/common tests_: This configuration will run the all test
+files for the `common` library chart.
 
 Next, press the green "Play" icon. This will start the tests show the
 outcome in a terminal window.
@@ -91,53 +84,23 @@ docker build -t k8s-at-home/charts-unit-test -f .devcontainer/Dockerfile .
 When you wish to run the tests, run this command in your shell:
 
 ```sh
-docker run --rm -it -v $(pwd):/charts --entrypoint "/bin/bash" -w /charts k8s-at-home/charts-unit-test -l -c "bundle exec m -r ./test/charts"
+docker run --rm -it -l \
+  -v $(pwd):/charts --entrypoint "/bin/bash" \
+  -w /charts k8s-at-home/charts-unit-test \
+  -c "go mod download && go test ./charts/.../tests"
 ```
 
 This will create a container with the charts repo root folder mounted to
-`/charts` and execute all the test files in the `test/charts` folder.
+`/charts` and execute all the test files belonging to the different charts.
+
+!!! note
+    Depending on the performance of your environment, this can take a long time
+    where it seems as if your machine is not doing anything!
 
 ## Output
 
 A successful test will output something like the following...
 
 ```text
-Started with run options --seed 52955
-
-common-test::statefulset volumeClaimTemplates
-  can set values for volumeClaimTemplates                         PASS (0.16s)
-  volumeClaimTemplates should be empty by default                 PASS (0.06s)
-
-common-test::ports settings
-  targetPort can be overridden                                    PASS (0.17s)
-  port name can be overridden                                     PASS (0.17s)
-  defaults to name "http" on port 8080                            PASS (0.16s)
-  targetPort cannot be a named port                               PASS (0.05s)
-
-common-test::pod replicas
-  defaults to 1                                                   PASS (0.08s)
-  accepts integer as value                                        PASS (0.08s)
-
-common-test::Environment settings
-  Check no environment variables                                  PASS (0.05s)
-  set "valueFrom" environment variables                           PASS (0.11s)
-  set "static" and "Dynamic/Tpl" environment variables            PASS (0.15s)
-  set "Dynamic/Tpl" environment variables                         PASS (0.11s)
-  set "static" environment variables                              PASS (0.10s)
-
-common-test::ingress
-  ingress with hosts                                              PASS (0.10s)
-  should be disabled when ingress.enabled: false                  PASS (0.06s)
-  ingress with hosts template is evaluated                        PASS (0.11s)
-  ingress with hosts and tls                                      PASS (0.15s)
-  ingress with hosts and tls templates is evaluated               PASS (0.16s)
-  should be enabled when ingress.enabled: true                    PASS (0.06s)
-
-common-test::controller type
-  accepts "daemonset"                                             PASS (0.06s)
-  accepts "statefulset"                                           PASS (0.06s)
-  defaults to "Deployment"                                        PASS (0.06s)
-
-Finished in 2.26077s
-22 tests, 59 assertions, 0 failures, 0 errors, 0 skips
+ok  	github.com/k8s-at-home/library-charts/charts/stable/common/tests	54.087s
 ```
