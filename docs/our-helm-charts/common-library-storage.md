@@ -203,7 +203,7 @@ Our charts do not modify file or folder permissions on volumes out of the box.
 This means that you will have to make sure that your storage can be written to
 by the application.
 
-See [Permissions](our-container-images/permissions/) for more details about
+See [Permissions][permissions] for more details about
 your options.
 
 ## Multiple subPaths for 1 volume
@@ -246,3 +246,5 @@ persistence:
       - path: Downloads
         mountPath: /downloads
 ```
+
+[permissions]: http://docs.k8s-at-home.com/our-container-images/permissions/
