@@ -216,7 +216,7 @@ instead of a string.
     It is not possible to define `mountPath` at the top level when using this
     feature
 
-Example:
+Examples:
 
 ```yaml
 persistence:
@@ -231,4 +231,18 @@ persistence:
       - path: myCertificate.pem
         mountPath: /certs/myCertificate.pem
         readOnly: true
+```
+
+```yaml
+persistence:
+  config:
+    type: pvc
+    existingClaim: myAppData
+    subPath:
+      - path: .
+        mountPath: /my_media
+      - path: Series
+        mountPath: /series
+      - path: Downloads
+        mountPath: /downloads
 ```
