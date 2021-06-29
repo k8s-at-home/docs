@@ -22,6 +22,7 @@ manifests on the fly.
 
 | Field           | Mandatory | Docs / Description                                                                    |
 | --------------- | --------- | ------------------------------------------------------------------------------------- |
+| `enabled`       | Yes       |                                                                                       |
 | `type`          | Yes       |                                                                                       |
 | `accessMode`    | Yes       | [link](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes)  |
 | `size`          | Yes       | [link](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#resources)     |
@@ -36,6 +37,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: pvc
     accessMode: ReadWriteOnce
     size: 1Gi
@@ -50,6 +52,7 @@ Our charts can be configured to attach to a pre-existing persistentVolumeClaim.
 
 | Field           | Mandatory | Docs / Description                                                                    |
 | --------------- | --------- | ------------------------------------------------------------------------------------- |
+| `enabled`       | Yes       |                                                                                       |
 | `type`          | Yes       |                                                                                       |
 | `existingClaim` | Yes       | Name of the existing PVC                                                              |
 | `mountPath`     | No        | Where to mount the volume in the main container. Defaults to `/<name_of_the_volume>`. |
@@ -62,6 +65,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: pvc
     existingClaim: myAppData
 ```
@@ -78,6 +82,7 @@ for more information.
 
 | Field           | Mandatory | Docs / Description                                                                                               |
 | --------------- | --------- | ---------------------------------------------------------------------------------------------------------------- |
+| `enabled`       | Yes       |                                                                                                                  |
 | `type`          | Yes       |                                                                                                                  |
 | `medium`        | No        | Set this to `Memory` to mount a tmpfs (RAM-backed filesystem) instead of the storage medium that backs the node. |
 | `sizeLimit`     | No        | If the `SizeMemoryBackedVolumes` feature gate is enabled, you can specify a size for memory backed volumes.      |
@@ -89,6 +94,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: emptyDir
 ```
 
@@ -107,6 +113,7 @@ for more information.
 
 | Field           | Mandatory | Docs / Description                                                                                                |
 | --------------- | --------- | ----------------------------------------------------------------------------------------------------------------- |
+| `enabled`       | Yes       |                                                                                                                   |
 | `type`          | Yes       |                                                                                                                   |
 | `hostPath`      | Yes       | Which path on the host should be mounted.                                                                         |
 | `hostPathType`  | No        | Specifying a hostPathType adds a check before trying to mount the path. See Kubernetes documentation for options. |
@@ -119,6 +126,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: hostPath
     hostPath: /dev
 ```
@@ -135,6 +143,7 @@ for more information.
 
 | Field           | Mandatory | Docs / Description                                                                    |
 | --------------- | --------- | ------------------------------------------------------------------------------------- |
+| `enabled`       | Yes       |                                                                                       |
 | `type`          | Yes       |                                                                                       |
 | `volumeSpec`    | Yes       | Define the raw Volume spec here.                                                      |
 | `mountPath`     | No        | Where to mount the volume in the main container. Defaults to the value of `hostPath`. |
@@ -150,6 +159,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: custom
     volumeSpec:
       configMap:
@@ -165,6 +175,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: custom
     volumeSpec:
       secret:
@@ -187,6 +198,7 @@ Minimal config:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: custom
     volumeSpec:
       nfs:
@@ -221,6 +233,7 @@ Examples:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: custom
     volumeSpec:
       configMap:
@@ -236,6 +249,7 @@ persistence:
 ```yaml
 persistence:
   config:
+    enabled: true
     type: pvc
     existingClaim: myAppData
     subPath:
