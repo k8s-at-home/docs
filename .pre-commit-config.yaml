@@ -7,7 +7,7 @@ repos:
         name: Run yamllint
         description: Lint yaml files
   - repo: https://github.com/igorshubovych/markdownlint-cli
-    rev: v0.27.1
+    rev: v0.28.1
     hooks:
       - id: markdownlint
         name: Run markdownlint
